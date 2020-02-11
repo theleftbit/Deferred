@@ -1,19 +1,12 @@
-// swift-tools-version:4.2
-
-//
-//  Package.swift
-//  Deferred
-//
-//  Created by Zachary Waldowski on 12/7/15.
-//  Copyright © 2015-2018 Big Nerd Ranch. Licensed under MIT.
-//
+// swift-tools-version:5.1
+// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "Deferred",
     products: [
-        .library(name: "Deferred", targets: [ "Deferred", "Task" ])
+        .library(name: "Deferred", type: .dynamic, targets: [ "Deferred", "Task" ])
     ],
     targets: [
         .target(name: "Atomics"),
@@ -31,5 +24,5 @@ let package = Package(
             name: "TaskTests",
             dependencies: [ "Deferred", "Task" ],
             exclude: [ "Tests/AllTestsCommon.swift" ])
-    ],
-    swiftLanguageVersions: [.v4_2, .version("5")])
+    ]
+)
