@@ -106,8 +106,8 @@ private final class ProxyProgress: Progress {
         static let attributesKeyPaths = [
             #keyPath(Progress.localizedDescription),
             #keyPath(Progress.localizedAdditionalDescription),
-            #keyPath(Progress.cancellable),
-            #keyPath(Progress.pausable),
+            #keyPath(Progress.isCancellable),
+            #keyPath(Progress.isPausable),
             #keyPath(Progress.kind)
         ]
 
@@ -136,8 +136,8 @@ private final class ProxyProgress: Progress {
             for key in Observation.attributesKeyPaths {
                 observee.addObserver(self, forKeyPath: key, options: [ .initial, .new ], context: &Observation.attributesContext)
             }
-            observee.addObserver(self, forKeyPath: #keyPath(Progress.cancelled), options: .initial, context: &Observation.cancelledContext)
-            observee.addObserver(self, forKeyPath: #keyPath(Progress.paused), options: .initial, context: &Observation.pausedContext)
+            observee.addObserver(self, forKeyPath: #keyPath(Progress.isCancelled), options: .initial, context: &Observation.cancelledContext)
+            observee.addObserver(self, forKeyPath: #keyPath(Progress.isPaused), options: .initial, context: &Observation.pausedContext)
 
             bnr_atomic_fetch_or(&state, State.observing.rawValue, .release)
         }
@@ -154,8 +154,8 @@ private final class ProxyProgress: Progress {
             for key in Observation.attributesKeyPaths {
                 observee.removeObserver(self, forKeyPath: key, context: &Observation.attributesContext)
             }
-            observee.removeObserver(self, forKeyPath: #keyPath(Progress.cancelled), context: &Observation.cancelledContext)
-            observee.removeObserver(self, forKeyPath: #keyPath(Progress.paused), context: &Observation.pausedContext)
+            observee.removeObserver(self, forKeyPath: #keyPath(Progress.isCancelled), context: &Observation.cancelledContext)
+            observee.removeObserver(self, forKeyPath: #keyPath(Progress.isPaused), context: &Observation.pausedContext)
         }
 
         override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
